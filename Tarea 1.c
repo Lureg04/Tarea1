@@ -1,7 +1,8 @@
 #include<stdio.h>
+#include<stdlib.h>
 
 int main(){
-	/* CONSTANTES */
+	/// CONSTANTES
 	//Datos de empresa:
 	const char razonSocial[] = "Megaretail y Cia S.A.";
 	const char rut[] = "99.999.999-9";
@@ -9,9 +10,20 @@ int main(){
 	const char direccion[] = "Avenida Fake 1202, Concepcion";
 	const char telefono[] = "41 22 3333";
 	const char email[] = "contacto@megaretailycia.cl";
-	
-	int op;
+
+    ///Variables y arreglos
+	int op, zapatos[4][2], modaMujer[6][2], modaHombre[6][2], blancaElectronica[5][2], computacion[4][2];
+    char confirmacion;
+
+    ///Definicion de productos
+    //Zapatos y Zapatillas
+    zapatos[0][0] = 25000; zapatos[0][1] = 6;
+    zapatos[1][0] = 60000; zapatos[1][1] = 2;
+    zapatos[2][0] = 33000; zapatos[2][1] = 4;
+    zapatos[3][0] = 72000; zapatos[3][1] = 2;
+
 	do{
+        system("cls");
 		printf("     Megaretail y Cia S.A\n"
 		   "--------Menu Principal--------\n"
 		   "1) Procesar Venta\n"
@@ -23,9 +35,81 @@ int main(){
 		   while(op < 0 || op > 3){
 				printf("Operacion invalida, ingresela nuevamente: "); scanf("%d", &op);
 		   }
-		   
+
+           system("cls");
 		   switch(op){
-		   	 //inserte opciones del menu
+               case 1: { ///Procesar Venta
+                   int cat, valorUnitario, existencias, valorNeto, iva, valorTotal, cant;
+                   printf("     Megaretail y Cia S.A\n"
+                           "--------Categorias-------\n"
+                          "1) Zapatos y Zapatillas\n"
+                          "2) Moda Mujer\n"
+                          "3) Moda Hombre\n"
+                          "4) Linea Blanca\n"
+                          "5) Computacion\n"
+                          "0) Menu Principal\n"
+                          "OP: "); scanf("%d", &cat);
+
+                   while(cat < 0 || cat > 5){
+                       printf("Categoria invalida, ingresela nuevamente: "); scanf("%d", &cat);
+                   }
+
+                   switch(cat) {
+                       case 0:{ //Menu Principal
+                           break;
+                       }
+                       case 1: { //Zapatos y Zapatillas
+                           int prod = 0, cant = 0;
+
+                           do {
+                               do {
+                                   system("cls");
+                                   printf("     Megaretail y Cia S.A\n"
+                                          "----Seleccione el Producto----\n"
+                                          "   Producto        Valor        Existencias\n"
+                                          "1) Zapato A:       %d             %d\n"
+                                          "2) Zapato B:       %d             %d\n"
+                                          "3) Zapatilla A:    %d             %d\n"
+                                          "4) Zapatilla B:    %d             %d\n\n"
+                                          "0) Volver atras\n"
+                                          "Producto: ",
+                                          zapatos[0][0], zapatos[0][1],
+                                          zapatos[1][0], zapatos[1][1],
+                                          zapatos[2][0], zapatos[2][1],
+                                          zapatos[3][0], zapatos[3][1]);
+                                   scanf("%d", &prod);
+
+                                   if (prod == 0) { break; }
+
+                                   while (prod < 0 || prod > 4) {
+                                       printf("El producto (u opcion) seleccionado es invalido, ingreselo nuevamente: ");
+                                       scanf("%d", &prod);
+                                   }
+
+                                   valorUnitario = zapatos[prod - 1][0];
+                                   existencias = zapatos[prod - 1][1];
+
+                                   printf("\nCuantas unidades de este producto desea procesar? (Ingrese 0 para volver atras): "), scanf(
+                                           "%d", &cant);
+                                   while (cant > existencias || cant < 0) {
+                                       if (cant > existencias) {
+                                           printf("No puede procesar mas productos que las existencias disponibles, ingrese una cantidad nuevamente: ");
+                                           scanf("%d", &cant);
+                                       } else {
+                                           printf("No puede procesar un numero negativo de existencias, ingrese una cantidad nuevamente: ");
+                                           scanf("%d", &cant);
+                                       }
+                                   }
+                               } while (prod == 0);
+                               if(prod == 0){ break; }
+                           } while (cant == 0);
+                           break;
+                       }
+                       case 2:{ //Moda Mujer
+                            break;
+                       }
+                   }
+               }
 		   }
 	} while(op != 0);
 }
