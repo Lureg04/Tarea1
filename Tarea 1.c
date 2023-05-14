@@ -12,7 +12,7 @@ int main(){
 	const char email[] = "contacto@megaretailycia.cl";
 
     ///Variables y arreglos
-	int zapatos[4][2], modaMujer[6][2], modaHombre[6][2], blancaElectronica[5][2], computacion[4][2], contBoleta = 1;
+	int zapatos[4][2], modaMujer[6][2], modaHombre[6][2], blancaElectronica[5][2], computacion[4][2], contBoleta = 1, ventasHechas = 0, ventasRealizables = 0;
     char op, confirmacion;
 
     ///Definicion de productos
@@ -51,6 +51,14 @@ int main(){
     computacion[2][0] = 220000; computacion[2][1] = 1;
     computacion[3][0] = 999990; computacion[3][1] = 2;
 
+    for(int cat=1; cat <= 5; cat++){
+        if(cat == 1){ for(int prod = 0; prod <= 3; prod++){ ventasRealizables += (zapatos[prod][0] * zapatos[prod][1]); }}
+        if(cat == 2){ for(int prod = 0; prod <= 5; prod++){ ventasRealizables += (modaMujer[prod][0] * modaMujer[prod][1]); }}
+        if(cat == 3){ for(int prod = 0; prod <= 5; prod++){ ventasRealizables += (modaHombre[prod][0] * modaHombre[prod][1]); }}
+        if(cat == 4){ for(int prod = 0; prod <= 4; prod++){ ventasRealizables += (blancaElectronica[prod][0] * blancaElectronica[prod][1]); }}
+        if(cat == 5){ for(int prod = 0; prod <= 3; prod++){ ventasRealizables += (computacion[prod][0] * computacion[prod][1]); }}
+    }
+
 	do{
         system("cls");
 		printf("     %s\n"
@@ -61,7 +69,7 @@ int main(){
 		   "0) Salir del programa\n"
 		   "OP: ", razonSocial); scanf("%s", &op);
 		   
-		   while(!(op == '0' || op == '1' || op == '2' || op == "3")){ printf("Operacion invalida, ingresela nuevamente: "); scanf("%s", &op); }
+		   while(!(op == '0' || op == '1' || op == '2' || op == '3')){ printf("Operacion invalida, ingresela nuevamente: "); scanf("%s", &op); }
 
            system("cls");
 		   switch(op){
@@ -390,6 +398,8 @@ int main(){
                                valorNeto = valorUnitario * cant;
                                iva = (valorNeto * 19) / 100;
                                valorTotal = valorNeto + iva;
+                               ventasHechas += valorNeto;
+                               ventasRealizables -= valorNeto;
 
                                if(cat == 1){ zapatos[prod-1][1] -= cant; }
                                if(cat == 2){ modaMujer[prod-1][1] -= cant; }
@@ -411,11 +421,88 @@ int main(){
                                       contBoleta, razonSocial, rut, giro, direccion, telefono, email, valorNeto, iva, valorTotal);
 
                                contBoleta++;
-                               system("pause");
+                               printf("Presione una tecla para volver al menu principal...");
+                               system("pause > nul");
                            }
                        }
                    } while(prod == 0);
-               }
+                   break;
+               } //Procesar venta
+               case '2': { ///Existencias x Categoria
+                   system("cls");
+                   printf("-------------------------%s-------------------------\n"
+                          "     Categoria               Producto                     Existencias\n", razonSocial);
+                   for(int cat=1; cat < 6; cat++){
+                       if(cat == 1){
+                           for(int prod=0; prod < 4; prod++){
+                               printf("Zapatos y Zapatillas         ");
+                               if(prod == 0){ printf("Zapato A                          %d\n", zapatos[prod][1]); }
+                               if(prod == 1){ printf("Zapato B                          %d\n", zapatos[prod][1]); }
+                               if(prod == 2){ printf("Zapatilla A                       %d\n", zapatos[prod][1]); }
+                               if(prod == 3){ printf("Zapatilla B                       %d\n\n", zapatos[prod][1]); }
+                           }
+                       }
+
+                       if(cat == 2){
+                           for(int prod=0; prod < 6; prod++){
+                               printf("Moda Mujer                   ");
+                               if(prod == 0){ printf("Pantalon A                        %d\n", modaMujer[prod][1]); }
+                               if(prod == 1){ printf("Pantalon B                        %d\n", modaMujer[prod][1]); }
+                               if(prod == 2){ printf("Polera A                          %d\n", modaMujer[prod][1]); }
+                               if(prod == 3){ printf("Polera B                          %d\n", modaMujer[prod][1]); }
+                               if(prod == 4){ printf("Poleron A                         %d\n", modaMujer[prod][1]); }
+                               if(prod == 5){ printf("Poleron B                         %d\n\n", modaMujer[prod][1]); }
+                           }
+                       }
+
+                       if(cat == 3){
+                           for(int prod=0; prod < 6; prod++){
+                               printf("Moda Hombre                  ");
+                               if(prod == 0){ printf("Pantalon A                        %d\n", modaHombre[prod][1]); }
+                               if(prod == 1){ printf("Pantalon B                        %d\n", modaHombre[prod][1]); }
+                               if(prod == 2){ printf("Polera A                          %d\n", modaHombre[prod][1]); }
+                               if(prod == 3){ printf("Polera B                          %d\n", modaHombre[prod][1]); }
+                               if(prod == 4){ printf("Poleron A                         %d\n", modaHombre[prod][1]); }
+                               if(prod == 5){ printf("Poleron B                         %d\n\n", modaHombre[prod][1]); }
+                           }
+                       }
+
+                       if(cat == 4){
+                           for(int prod=0; prod < 5; prod++){
+                               printf("Linea blanca y Electronica   ");
+                               if(prod == 0){ printf("Aspiradora                        %d\n", blancaElectronica[prod][1]); }
+                               if(prod == 1){ printf("Microondas                        %d\n", blancaElectronica[prod][1]); }
+                               if(prod == 2){ printf("Cocina                            %d\n", blancaElectronica[prod][1]); }
+                               if(prod == 3){ printf("Lavadora                          %d\n", blancaElectronica[prod][1]); }
+                               if(prod == 4){ printf("Refrigerador                      %d\n\n", blancaElectronica[prod][1]); }
+                           }
+                       }
+
+                       if(cat == 5){
+                           for(int prod=0; prod < 4; prod++){
+                               printf("Computacion                  ");
+                               if(prod == 0){ printf("PC de Escritorio                  %d\n", computacion[prod][1]); }
+                               if(prod == 1){ printf("PC Gamer                          %d\n", computacion[prod][1]); }
+                               if(prod == 2){ printf("Notebook                          %d\n", computacion[prod][1]); }
+                               if(prod == 3){ printf("Notebook Gamer                    %d\n\n", computacion[prod][1]); }
+                           }
+                       }
+                   }
+                   printf("Presione una tecla para volver al menu principal...");
+                   system("pause > nul");
+                   break;
+               } //Mostrar existencias
+               case '3': { ///Mostrar ventas actuales y
+                   system("cls");
+                   printf("     %s\n"
+                          "Valor de ventas hechas: %d\n"
+                          "Valor de ventas por hacer: %d\n",
+                          razonSocial, ventasHechas, ventasRealizables);
+
+                   printf("Presione una tecla para volver al menu principal...");
+                   system("pause > nul");
+                   break;
+               } //Mostrar ventas
 		   }
 	} while(op != '0');
 }
